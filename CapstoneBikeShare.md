@@ -448,7 +448,7 @@ After this long step of processing data, now I can do the analysis step
 
 **STEP FOUR: ANALYSIS**
 
--Before jumping to the analysis, I must read the new version(sample_df) that I created in the chunk above, and then convert it to the tibble data frame because it is easier than the classic data frame, and take a  glimpse of seen a summary (skim_without_charts) and the structure (str) of the new version, the columns must be 19, and the rows must be 65,820
+-Before jumping to the analysis, we must read the new version(sample_df) that we created in the chunk above, and then convert it to the tibble data frame because it is easier than the classic data frame, and take a  glimpse of seen a summary (skim_without_charts) and the structure (str) of the new version, the columns must be 19, and the rows must be 65,820
 
 ```{r}
 sample_df_v2 <- read_csv("sample_df_v2.csv")
@@ -468,8 +468,7 @@ ncol(sample_df_v2)
 
 
 so now I can do the analysis.
--As mentioned before the member (58%) have a greater portion than casual (42%), this result give us a sense of the comparison between the member and casual, cannot be equally
-and we can do more comparison by taking the average(mean,  median), min,and a max of ride_length  of each member and casual, than comparing it by each day
+-As mentioned before the member (58%) have a greater portion than casual (42%), this result give us a sense of the comparison between the member and casual, cannot be equally and we can do more comparison by taking the average(mean,  median), min,and a max of ride_length  of each member and casual, than comparing it by each day
 
 ```{r}
 # Compare members and casual users
