@@ -65,6 +65,7 @@ install.packages("lubridate")
 install.packages("tibble")
 install.packages("rmarkdown")
 install.packahes("viridis")
+
 ```
 
 
@@ -88,6 +89,7 @@ install.packahes("viridis")
 ***load the libraries***
 
 ```{r library}
+
 library(tidyverse)
 library(dplyr) 
 library(janitor) 
@@ -96,17 +98,8 @@ library(ggplot2)
 library(lubridate) 
 library(tibble)
 library(rmarkdown)
+
 ```
-
-
-***Set the directory***
-
-
-```{r}
-getwd()
-setwd("~/Documents/capstone")
-```
-
 
 
 ***then, I download the dataset that are from September 2021 to August 2022***
