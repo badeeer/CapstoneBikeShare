@@ -521,6 +521,7 @@ sample_df_v2 %>%
 
 **chart(3)**
 -the sum of ride length of each member and casual
+
 ```{r}
 sample_df_v2 %>% 
   group_by(member_casual) %>% 
@@ -535,6 +536,7 @@ sample_df_v2 %>%
 -> the sum of ride length in chart(3) above, of the casual, is more than the member, and with less casual users who use bikes effect the mean.
 
 -Now  let's see the number of ride length in member and casual at hours
+
 ```{r}
 sample_df_v2 %>% 
   mutate(hour= hour(started_at)) %>% 
@@ -547,7 +549,9 @@ sample_df_v2 %>%
 
 **chart(4)**
 -the number of member and casual at hours 
+
 ```{r}
+
 sample_df_v2 %>% 
   mutate(hours= hour(started_at)) %>% 
   group_by(member_casual, hours) %>%
@@ -557,7 +561,6 @@ sample_df_v2 %>%
   ggplot(aes(x=hours, y=number_of_rides, fill=member_casual))+
   geom_col(position = "dodge")
 
-
 ```
 
 
@@ -565,6 +568,7 @@ sample_df_v2 %>%
 -the ride length mean of each member and casual at an hourly scale.
 
 ```{r}
+
 sample_df_v2 %>% 
   mutate(hours= hour(started_at)) %>% 
   group_by(member_casual, hours) %>%
@@ -585,6 +589,7 @@ sample_df_v2 %>%
 
 -The number of member and casual in day of week.
 ```{r}
+
 sample_df_v2 %>% 
   mutate(weekday=wday(started_at, label=TRUE)) %>% 
   group_by(member_casual, weekday) %>%
@@ -612,7 +617,9 @@ sample_df_v2 %>%
 
 **chart(7)**
 -The mean of each member and casual at weekday scale.
+
 ```{r}
+
 sample_df_v2 %>% 
   mutate(weekday=wday(started_at, label=TRUE)) %>% 
   group_by(member_casual, weekday) %>%
@@ -625,26 +632,29 @@ sample_df_v2 %>%
 ```
 
 -**FINDING (6)**
+
 - > So in the table above the sum of member are more than the sum of casual from Monday to Friday, but that is different on the weekend that indicates the casual use bikes more at weekend (we need some more data like surveys to see reasons why casual user prefer using bikes at weekend) because also the mean of casual at weekend is greater than another day
 
 
 -Now let's see the numbers and  the mean between the member and casual by days 
 
 ```{r}
+
 sample_df_v2 %>% 
   mutate(day = mday(started_at)) %>% 
   group_by(member_casual, day) %>% 
   summarise(number_of_rides = n()
             ,average_duration = mean(ride_length)) %>% 
   arrange(day)
+  
 ```
-
 
 
 **chart(8)**
 -the number of members and casual by day.
 
 ```{r}
+
 sample_df_v2 %>% 
   mutate(day = mday(started_at)) %>% 
   group_by(member_casual, day) %>% 
@@ -659,7 +669,9 @@ sample_df_v2 %>%
 
 **Chart(9)**
 -the mean of the member and casual by day
+
 ```{r}
+
 #Bar chart
 sample_df_v2 %>% 
   mutate(day = mday(started_at)) %>% 
@@ -673,6 +685,7 @@ sample_df_v2 %>%
 
 **chart(10)**
 -the number of member and casual at days
+
 ```{r}
 sample_df_v2 %>% 
   mutate(day = mday(started_at)) %>% 
@@ -692,6 +705,7 @@ sample_df_v2 %>%
 
 -let's see how the member and casual be different in a monthly scale.
 ```{r}
+
 sample_df_v2 %>% 
   mutate(month = month(started_at, label = TRUE)) %>% 
   group_by(member_casual, month) %>%
@@ -730,6 +744,7 @@ sample_df_v2 %>%
 ```
 
 **chart(13)**
+
 -the number of the member and casual at monthly scale by using line.
 ```{r}
 sample_df_v2 %>% 
@@ -762,6 +777,7 @@ sample_df_v2 %>%
 **chart(14)**
 -the number of member and casual at year 
 ```{r}
+
 sample_df_v2 %>% 
   mutate(year= year(started_at)) %>% 
   group_by(member_casual, year) %>%
@@ -770,6 +786,7 @@ sample_df_v2 %>%
   arrange(year) %>% 
   ggplot(aes(x=year, y=number_of_rides, fill=member_casual))+
   geom_col(position = "dodge")
+  
 ```
 
 
