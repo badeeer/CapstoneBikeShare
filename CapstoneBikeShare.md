@@ -129,6 +129,7 @@ But before the check for missing values and duplication, I will check every data
 1. see if we have the same columns **(colnames)** in all datasets
 
 ```{r}
+
 #df_01
 colnames(df_01)
 #df_02
@@ -153,11 +154,13 @@ colnames(df_10)
 colnames(df_11)
 #df_12
 colnames(df_12)
+
 ```
 
 2. A Structure of each dataset, we want to see each column and it's a datatype
 
 ```{r}
+
 str(df_01)
 str(df_02)
 str(df_03)
@@ -170,6 +173,7 @@ str(df_09)
 str(df_10)
 str(df_11)
 str(df_12)
+
 ```
 
 All dataset have the same columns ***(ride_id, rideable_type, started_at, ended_at, start_station_name, start_station_id, end_station_id, start_lat, start_lng, end_lat, end_lng, member_casual)***,  I didn't to rename some dataset's becaue they have same columns name
@@ -180,6 +184,7 @@ before combining all datasets into one, first clean every dataset by the filter'
 1- Find the duplicated value
 
 ```{r}
+
 sum(duplicated(df_01$ride_id))
 sum(duplicated(df_02$ride_id))
 sum(duplicated(df_03$ride_id))
@@ -192,6 +197,7 @@ sum(duplicated(df_09$ride_id))
 sum(duplicated(df_10$ride_id))
 sum(duplicated(df_11$ride_id))
 sum(duplicated(df_12$ride_id))
+
 ```
 
 -as you can see there's no duplication in ride_id, so now let's keep forward and deal with the missing value
@@ -373,9 +379,11 @@ df <- bind_rows(df_01, df_02, df_03, df_04, df_05, df_06,
 > - Sample size: 65,820
 
 ```{r}
+
 sample_df <- sample_n(df, 65820, replace= TRUE)
 
 sample_df <- write_csv(sample_df, "sample_df.csv")
+
 ```
 
 
@@ -406,17 +414,20 @@ str(sample_df$ride_length)
 - convert to numeric 
 
 ```{r}
+
 sample_df$ride_length <- as.numeric(sample_df$ride_length)
 ```
 
 7- Check for error's in ride_length (in seconds), the ride_length must be greater or equal to 0
 
 ```{r}
+
 #remove bad data
 sample_df_v2 <- sample_df[!(sample_df$ride_length<0),]
 
 #error's in ride_length 
 sum(sample_df_v2$ride_length < 0)
+
 ```
 
 8 -  let's see if more then casual and member in casual_member, and I doing some calculation.
@@ -428,11 +439,13 @@ sample_df %>%
     group_by(member_casual) %>% 
     summarise(total = length(ride_length),
               'percentage' = (length(ride_length) / nrow(sample_df_v2)) * 100)
+              
 ```
 
 9- Create a new version that is cleaning and processed
 
 ```{r}
+
 write_csv(sample_df, "sample_df_v2.csv")
 
 ```
@@ -444,6 +457,7 @@ After this long step of processing data, now I can do the analysis step
 -Before jumping to the analysis, we must read the new version(sample_df) that we created in the chunk above, and then convert it to the tibble data frame because it is easier than the classic data frame, and take a  glimpse of seen a summary (skim_without_charts) and the structure (str) of the new version, the columns must be 19, and the rows must be 65,820
 
 ```{r}
+
 sample_df_v2 <- read_csv("sample_df_v2.csv")
 # using tibble 
 as_tibble(sample_df_v2)
@@ -460,10 +474,11 @@ ncol(sample_df_v2)
 ```
 
 
-so now I can do the analysis.
+
 -As mentioned before the member (58%) have a greater portion than casual (42%), this result give us a sense of the comparison between the member and casual, cannot be equally and we can do more comparison by taking the average(mean,  median), min,and a max of ride_length  of each member and casual, than comparing it by each day
 
 ```{r}
+
 # Compare members and casual users
 aggregate(sample_df_v2$ride_length ~ sample_df_v2$member_casual, FUN = mean)
 aggregate(sample_df_v2$ride_length ~ sample_df_v2$member_casual, FUN = median)
@@ -491,6 +506,7 @@ sample_df_v2 %>%
 
 **chart(1)**
 -the sum of each member and casual 
+
 ```{r}
 sample_df_v2 %>% 
   group_by(member_casual) %>% 
@@ -506,6 +522,7 @@ sample_df_v2 %>%
 
 **chart(2)**
 - the mean of ride length of each member and casual 
+- 
 ```{r}
 sample_df_v2 %>% 
   group_by(member_casual) %>% 
@@ -523,6 +540,7 @@ sample_df_v2 %>%
 -the sum of ride length of each member and casual
 
 ```{r}
+
 sample_df_v2 %>% 
   group_by(member_casual) %>% 
   summarise(total_ride_length= sum(ride_length)) %>% 
@@ -538,6 +556,7 @@ sample_df_v2 %>%
 -Now  let's see the number of ride length in member and casual at hours
 
 ```{r}
+
 sample_df_v2 %>% 
   mutate(hour= hour(started_at)) %>% 
   group_by(member_casual, hour) %>%
